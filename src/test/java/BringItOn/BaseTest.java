@@ -9,7 +9,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class PasteBinTest {
+public class BaseTest {
     public WebDriver driver;
     public PasteBinPageModel pasteBinPageModel;
     public String text= "git config --global user.name  \"New Sheriff in Town\"\n" +
@@ -30,18 +30,9 @@ public class PasteBinTest {
         Thread.sleep(10000);
     }
 
-//    @Test
-//    public void submitForm() throws InterruptedException {
-//        pasteBinPageModel = new PasteBinPageModel(driver);
-//        pasteBinPageModel.submitForm(text,"Bash","10 Minutes", "Hayk");
-//        Thread.sleep(10000);
-//        System.out.println(driver.getTitle());
-//
-//    }
+    @AfterTest(alwaysRun = true)
+    public void tearDown() {
+        driver.quit();
 
-//    @AfterTest(alwaysRun = true)
-//    public void tearDown() {
-//        driver.quit();
-//
-//    }
+    }
 }

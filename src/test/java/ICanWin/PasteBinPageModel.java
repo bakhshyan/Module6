@@ -50,7 +50,7 @@ public class PasteBinPageModel {
     }
 
     public void submitForm(String text, String pastExpriationValue, String pastNameValue) {
-        agreeCookies();
+        //agreeCookies();
         fillTextArea(text);
         selectPasteExpiration(pastExpriationValue);
         fillPastName(pastNameValue);

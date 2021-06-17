@@ -3,7 +3,7 @@ package BringItOn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TitleTest extends PasteBinTest{
+public class TitleTest extends BaseTest {
 
 
     @Test

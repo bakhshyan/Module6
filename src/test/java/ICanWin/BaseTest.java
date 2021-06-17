@@ -6,7 +6,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class PasteBinTest {
+public class BaseTest {
     private WebDriver driver;
     private PasteBinPageModel pasteBinPageModel;
 
