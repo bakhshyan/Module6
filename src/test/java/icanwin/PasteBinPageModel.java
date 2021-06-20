@@ -1,8 +1,6 @@
-package BringItOn;
+package icanwin;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,9 +11,6 @@ public class PasteBinPageModel {
 
     @FindBy(css = "textarea[id='postform-text']")
     private WebElement newPasteTextArea;
-
-    @FindBy(xpath = "//span[@data-select2-id='1']")
-    private WebElement syntaxHighlighting;
 
     @FindBy(xpath = "//span[@data-select2-id='3']")
     private WebElement pasteExpirtaion;
@@ -40,11 +35,6 @@ public class PasteBinPageModel {
         newPasteTextArea.sendKeys(text);
     }
 
-    private void selectSyntaxHighlighting(String syntaxHighlightingValue) {
-        syntaxHighlighting.click();
-        driver.findElement(By.xpath("//li[text() ='" + syntaxHighlightingValue + "']")).click();
-    }
-
     private void selectPasteExpiration(String pastExpirationValue) {
         pasteExpirtaion.click();
         driver.findElement(By.xpath("//li[text() ='" + pastExpirationValue + "']")).click();
@@ -56,18 +46,15 @@ public class PasteBinPageModel {
     }
 
     private void agreeCookies() {
-        new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
     }
 
-    public void submitForm(String text, String syntaxHighlightingValue, String pastExpirationValue, String pastNameValue) {
+    public void submitForm(String text, String pastExpriationValue, String pastNameValue) {
         //agreeCookies();
         fillTextArea(text);
-        selectSyntaxHighlighting(syntaxHighlightingValue);
-        selectPasteExpiration(pastExpirationValue);
+        selectPasteExpiration(pastExpriationValue);
         fillPastName(pastNameValue);
         createNewPasteButton.submit();
-       // agreeCookies();
-
 
     }
 }

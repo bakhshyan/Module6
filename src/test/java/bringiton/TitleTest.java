@@ -1,4 +1,4 @@
-package BringItOn;
+package bringiton;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
