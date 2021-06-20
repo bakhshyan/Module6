@@ -98,12 +98,21 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//md-content[@id='soleTenant']/md-list[@class='cartitem ng-scope']/md-list-item[4]/div")
     private WebElement commitmentTerm;
 
+    @FindBy(xpath = "//button[@id='email_quote']")
+    private WebElement emailEstimateButton;
+
+    @FindBy(xpath = "//form[@name='emailForm']//input[@type='email']")
+    private WebElement emailInput;
+
+    @FindBy(xpath = "//button[@aria-label='Send Email']")
+    private WebElement sendEmailButton;
+
     public CalculatorPageModel(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    private void switchToIframes() {
+    public void switchToIframes() {
         driver.switchTo().frame(firstIframe);
         driver.switchTo().frame(secondIframe);
     }
@@ -155,5 +164,17 @@ public class CalculatorPageModel {
         return commitmentTerm.getText();
     }
 
+    public void emailEstimateButtonClick() {
+        switchToIframes();
+        emailEstimateButton.click();
+    }
 
+    public WebElement getEmailInput() {
+        return emailInput;
+    }
+
+    public void sendEmail() {
+        sendEmailButton.click();
+
+    }
 }
