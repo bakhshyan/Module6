@@ -31,10 +31,10 @@ public class BaseTest {
 
     }
 
-//    @AfterSuite(alwaysRun = true)
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @AfterSuite(alwaysRun = true)
+    public void tearDown() {
+        driver.quit();
+    }
 
 
 }

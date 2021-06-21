@@ -38,7 +38,7 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//md-select-value[@id='select_value_label_63']/span[@class='md-select-icon']")
     private WebElement machineTypeSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_242']/div[@class='md-text ng-binding']")
+    @FindBy(xpath = "//md-option[@id='select_option_243']/div[@class='md-text ng-binding']")
     private WebElement machineTypeSelect;
 
     @FindBy(xpath = "//input[@id='input_107']")
@@ -47,7 +47,7 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']//div[@class='md-container md-ink-ripple']")
     private WebElement addGPUCheckbox;
 
-    @FindBy(xpath = "//md-select[@id='select_370']")
+    @FindBy(xpath = "//md-select[@id='select_373']")
     private WebElement numberOfGPUSelectIcon;
 
     @FindBy(xpath = "//md-option[@id='select_option_377']/div[@class='md-text ng-binding']")
@@ -68,7 +68,7 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//md-select-value[@id='select_value_label_105']/span[@class='md-select-icon']")
     private WebElement dataCenterLocationSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_256']/div[@class='md-text ng-binding']")
+    @FindBy(xpath = "//md-option[@id='select_option_257']/div[@class='md-text ng-binding']")
     private WebElement dataCenterLocationSelect;
 
     @FindBy(xpath = "//md-select-value[@id='select_value_label_106']/span[@class='md-select-icon']")
@@ -107,6 +107,9 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//button[@aria-label='Send Email']")
     private WebElement sendEmailButton;
 
+    @FindBy(xpath = "//h2[@class='md-title']/b[@class='ng-binding']")
+    private WebElement totalAmount;
+
     public CalculatorPageModel(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -119,7 +122,7 @@ public class CalculatorPageModel {
 
     public void fillTheForm(int numberOfInstance, int numberOfNodes) {
         switchToIframes();
-        new WebDriverWait(driver,20).until(ExpectedConditions.visibilityOf(numberOfInstanceInput)).sendKeys(String.valueOf(numberOfInstance));
+        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(numberOfInstanceInput)).sendKeys(String.valueOf(numberOfInstance));
         operatingSystemSelectIcon.click();
         operatingSystemSelect.click();
         machineClassSelectIcon.click();
@@ -148,7 +151,7 @@ public class CalculatorPageModel {
         return VMClassValue.getText();
     }
 
-    public String getInstanceType(){
+    public String getInstanceType() {
         return instanceType.getText();
     }
 
@@ -165,8 +168,9 @@ public class CalculatorPageModel {
     }
 
     public void emailEstimateButtonClick() {
-        switchToIframes();
+        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(emailEstimateButton));
         emailEstimateButton.click();
+
     }
 
     public WebElement getEmailInput() {
@@ -174,7 +178,12 @@ public class CalculatorPageModel {
     }
 
     public void sendEmail() {
+        new WebDriverWait(driver,30).until(ExpectedConditions.visibilityOf(sendEmailButton));
         sendEmailButton.click();
+    }
 
+    public String getTotalAmount() {
+        switchToIframes();
+        return totalAmount.getText();
     }
 }

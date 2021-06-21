@@ -13,7 +13,7 @@ public class TempMailPageModel {
     @FindBy(xpath = "//input[@id='mail_address']")
     private WebElement mailAddressInput;
 
-    @FindBy(xpath = "//div[@class='mail_message']/div[@class='message_top']")
+    @FindBy(xpath = "//span[@class='small_message_icon']")
     private WebElement mailBoxHeader;
 
     @FindBy(xpath ="//tr[@id='mobilepadding']//table/tbody/tr[3]/td[2]" )
@@ -25,11 +25,12 @@ public class TempMailPageModel {
     }
 
     public String getMailAddress() {
+        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(mailAddressInput));
         return mailAddressInput.getAttribute("value");
     }
 
     public void clickMailBoxHeader() {
-        new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(mailBoxHeader)).click();
+        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(mailBoxHeader)).click();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", mailBoxHeader);
     }
 
