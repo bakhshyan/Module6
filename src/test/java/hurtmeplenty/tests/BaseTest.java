@@ -3,9 +3,9 @@ package hurtmeplenty.tests;
 import hurtmeplenty.pagemodels.CalculatorPageModel;
 import hurtmeplenty.pagemodels.HomePageModel;
 import hurtmeplenty.pagemodels.SearchedItemsPageModel;
+import hurtmeplenty.pagemodels.TempMailPageModel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class BaseTest {
@@ -13,6 +13,7 @@ public class BaseTest {
     public HomePageModel homePageModel;
     public SearchedItemsPageModel searchedItemsPageModel;
     public CalculatorPageModel calculatorPageModel;
+    public TempMailPageModel tempMailPageModel;
 
     String machineClassValue = "regular";
     String machineTypeValue = "e2-standard-2";
@@ -29,6 +30,7 @@ public class BaseTest {
         homePageModel = new HomePageModel(driver);
         searchedItemsPageModel = new SearchedItemsPageModel(driver);
         calculatorPageModel = new CalculatorPageModel(driver);
+        tempMailPageModel = new TempMailPageModel(driver);
         String searchText = "Google Cloud Platform Pricing Calculator";
         homePageModel.searchItem(searchText);
         searchedItemsPageModel.clickSearchedResult(searchText);
@@ -45,9 +47,9 @@ public class BaseTest {
 
     }
 
-//    @AfterTest(alwaysRun = true)
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @AfterTest(alwaysRun = true)
+    public void tearDown() {
+        driver.quit();
+    }
 
 }

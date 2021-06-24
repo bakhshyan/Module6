@@ -1,5 +1,6 @@
-package bringiton;
+package bringiton.tests;
 
+import bringiton.pagemodel.PasteBinPageModel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
@@ -23,7 +24,7 @@ public class BaseTest {
 
         pasteBinPageModel = new PasteBinPageModel(driver);
         pasteBinPageModel.submitForm(text,syntaxHighlightingValue,"10 Minutes", pastNameValue);
-        Thread.sleep(10000);
+        //Thread.sleep(10000);
     }
 
     @AfterTest(alwaysRun = true)

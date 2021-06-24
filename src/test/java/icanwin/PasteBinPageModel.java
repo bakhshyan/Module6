@@ -24,6 +24,9 @@ public class PasteBinPageModel extends BasePage {
     @FindBy(xpath = "//button[text()='AGREE']")
     private WebElement agreeCookiesButton;
 
+    @FindBy(xpath = "//div[@class='info-top']/h1")
+    private WebElement userName;
+
     public PasteBinPageModel(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -46,15 +49,20 @@ public class PasteBinPageModel extends BasePage {
     private void agreeCookies() {
         waitForELementToAppear(agreeCookiesButton);
         agreeCookiesButton.click();
-        //new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
+
     }
 
+    private String getUsername() {
+        waitForELementToAppear(userName);
+        return userName.getText();
+    }
     public void submitForm(String text, String pastExpriationValue, String pastNameValue) {
         //agreeCookies();
         fillTextArea(text);
         selectPasteExpiration(pastExpriationValue);
         fillPastName(pastNameValue);
         createNewPasteButton.submit();
+        getUsername();
 
     }
 }

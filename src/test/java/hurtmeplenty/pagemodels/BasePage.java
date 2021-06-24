@@ -1,4 +1,4 @@
-package icanwin;
+package hurtmeplenty.pagemodels;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
-    private static final int TIMEOUT =20;
-    private static final int POLLING = 2000;
+    private static final int TIMEOUT = 20;
+    private static final int POLLING = 800;
 
     protected WebDriver driver;
     private WebDriverWait wait;
@@ -25,7 +25,6 @@ public class BasePage {
     }
 
     protected String getTitle() {
-        return  driver.getTitle();
+        return driver.getTitle();
     }
-
 }

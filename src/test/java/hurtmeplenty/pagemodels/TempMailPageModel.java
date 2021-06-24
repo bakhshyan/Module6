@@ -4,11 +4,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class TempMailPageModel {
+public class TempMailPageModel extends BasePage {
     private WebDriver driver;
     @FindBy(xpath = "//input[@id='mail_address']")
     private WebElement mailAddressInput;
@@ -16,21 +13,22 @@ public class TempMailPageModel {
     @FindBy(xpath = "//span[@class='small_message_icon']")
     private WebElement mailBoxHeader;
 
-    @FindBy(xpath ="//tr[@id='mobilepadding']//table/tbody/tr[3]/td[2]" )
+    @FindBy(xpath = "//tr[@id='mobilepadding']//table/tbody/tr[3]/td[2]")
     private WebElement totalAmount;
 
     public TempMailPageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     public String getMailAddress() {
-        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(mailAddressInput));
+        waitForELementToAppear(mailAddressInput);
         return mailAddressInput.getAttribute("value");
     }
 
     public void clickMailBoxHeader() {
-        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(mailBoxHeader)).click();
+        waitForELementToAppear(mailBoxHeader);
+        mailBoxHeader.click();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", mailBoxHeader);
     }
 

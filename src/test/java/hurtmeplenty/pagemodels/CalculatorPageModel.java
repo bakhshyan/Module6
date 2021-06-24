@@ -1,15 +1,15 @@
 package hurtmeplenty.pagemodels;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.Set;
 
 
-public class CalculatorPageModel {
+public class CalculatorPageModel extends BasePage {
     private WebDriver driver;
 
     @FindBy(xpath = "//article[@id='cloud-site']/devsite-iframe/iframe")
@@ -95,8 +95,8 @@ public class CalculatorPageModel {
 
 
     public CalculatorPageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     public void switchToIframes() {
@@ -108,7 +108,9 @@ public class CalculatorPageModel {
                             String machineTypeValue, String numberOfGPUValue, String GPUTypeValue, String localSSDValue,
                             String dataCenterLocationValue, String commitedUsageValue, int numberOfNodes) {
         switchToIframes();
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(numberOfInstanceInput)).sendKeys(String.valueOf(numberOfInstance));
+
+        waitForELementToAppear(numberOfInstanceInput);
+        numberOfInstanceInput.sendKeys(String.valueOf(numberOfInstance));
         operatingSystemSelectIcon.click();
         driver.findElement(By.xpath(String.format(operatingSystemSelect, operatingSystemValue))).click();
         machineClassSelectIcon.click();
@@ -118,7 +120,9 @@ public class CalculatorPageModel {
         numberOfNodesInput.sendKeys(String.valueOf(numberOfNodes));
         addGPUCheckbox.click();
         numberOfGPUSelectIcon.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format(numberOfGPUSelect, numberOfGPUValue))))).click();
+        WebElement numberOfGPUSelectElement = driver.findElement(By.xpath(String.format(numberOfGPUSelect, numberOfGPUValue)));
+        waitForELementToAppear(numberOfGPUSelectElement);
+        numberOfGPUSelectElement.click();
         GPUTypeSelectIcon.click();
         driver.findElement(By.xpath(String.format(GPUTypeSelect, GPUTypeValue))).click();
         localSSDSelectIcon.click();
@@ -153,19 +157,18 @@ public class CalculatorPageModel {
     }
 
     public void emailEstimateButtonClick() {
-        new WebDriverWait(driver, 60).until(ExpectedConditions.visibilityOf(emailEstimateButton));
+        waitForELementToAppear(emailEstimateButton);
         emailEstimateButton.click();
 
     }
 
     public void setEmaiInput(String email) {
-        new WebDriverWait(driver, 80).until(ExpectedConditions.visibilityOf(emailInput));
-        new WebDriverWait(driver, 40);
+        waitForELementToAppear(emailInput);
         emailInput.sendKeys(email);
     }
 
     public void sendEmail() {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(sendEmailButton));
+        waitForELementToAppear(sendEmailButton);
         sendEmailButton.click();
     }
 
@@ -173,4 +176,31 @@ public class CalculatorPageModel {
         switchToIframes();
         return totalAmount.getText();
     }
+
+    private String mailPage = null;
+    private String currentHandle = null;
+
+    public void openNewTab() {
+
+        ((JavascriptExecutor) driver).executeScript("window.open();");
+        currentHandle = driver.getWindowHandle();
+        Set<String> handles = driver.getWindowHandles();
+        for (String actual : handles) {
+            if (!actual.equalsIgnoreCase(currentHandle)) {
+                driver.switchTo().window(actual);
+                driver.get("https://10minutemail.com/");
+                mailPage = actual;
+            }
+        }
+    }
+
+    public String getMailPage(){
+        return mailPage;
+    }
+
+    public String getCurrentHandle() {
+        return currentHandle;
+    }
+
+
 }

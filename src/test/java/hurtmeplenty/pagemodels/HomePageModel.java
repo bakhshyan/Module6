@@ -6,18 +6,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomePageModel {
+public class HomePageModel extends BasePage {
     private WebDriver driver;
 
     @FindBy(name = "q")
     private WebElement searchIcon;
 
     public HomePageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
-    private void clickSearchIcon(){
+    private void clickSearchIcon() {
         searchIcon.click();
     }
 
@@ -25,7 +25,7 @@ public class HomePageModel {
         searchIcon.sendKeys(searchText);
     }
 
-    private WebElement  getSearchInputElement() {
+    private WebElement getSearchInputElement() {
         return searchIcon;
     }
 

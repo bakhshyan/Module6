@@ -1,4 +1,4 @@
-package bringiton;
+package bringiton.tests;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;

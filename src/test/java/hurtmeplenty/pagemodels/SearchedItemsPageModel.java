@@ -4,11 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SearchedItemsPageModel {
+
+public class SearchedItemsPageModel extends BasePage {
 
     private WebDriver driver;
 
@@ -16,12 +14,12 @@ public class SearchedItemsPageModel {
     private WebElement searchIcon;
 
     public SearchedItemsPageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
     public void clickSearchedResult(String searchItem) {
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(searchIcon));
+        waitForELementToAppear(searchIcon);
         searchIcon.findElement(By.linkText(searchItem)).click();
     }
 }

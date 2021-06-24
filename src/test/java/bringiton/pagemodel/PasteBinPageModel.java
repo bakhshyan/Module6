@@ -1,14 +1,12 @@
-package bringiton;
+package bringiton.pagemodel;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PasteBinPageModel {
+
+public class PasteBinPageModel extends BasePage {
     private WebDriver driver;
 
     @FindBy(css = "textarea[id='postform-text']")
@@ -30,9 +28,12 @@ public class PasteBinPageModel {
     @FindBy(xpath = "//button[text()='AGREE']")
     private WebElement agreeCookiesButton;
 
+    @FindBy(xpath = "//div[@class='info-top']/h1")
+    private WebElement userName;
+
     public PasteBinPageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
 
     }
 
@@ -56,9 +57,14 @@ public class PasteBinPageModel {
     }
 
     private void agreeCookies() {
-        new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
+        waitForELementToAppear(agreeCookiesButton);
+        agreeCookiesButton.click();
     }
 
+    private String getUsername() {
+        waitForELementToAppear(userName);
+        return userName.getText();
+    }
     public void submitForm(String text, String syntaxHighlightingValue, String pastExpirationValue, String pastNameValue) {
         //agreeCookies();
         fillTextArea(text);
@@ -66,7 +72,8 @@ public class PasteBinPageModel {
         selectPasteExpiration(pastExpirationValue);
         fillPastName(pastNameValue);
         createNewPasteButton.submit();
-       // agreeCookies();
+        // agreeCookies();
+        getUsername();
 
 
     }
