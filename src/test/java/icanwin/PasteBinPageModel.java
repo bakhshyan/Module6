@@ -2,11 +2,10 @@ package icanwin;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PasteBinPageModel {
+public class PasteBinPageModel extends BasePage {
     private WebDriver driver;
 
     @FindBy(css = "textarea[id='postform-text']")
@@ -26,9 +25,8 @@ public class PasteBinPageModel {
     private WebElement agreeCookiesButton;
 
     public PasteBinPageModel(WebDriver driver) {
+        super(driver);
         this.driver = driver;
-        PageFactory.initElements(driver, this);
-
     }
 
     private void fillTextArea(String text) {
@@ -46,7 +44,9 @@ public class PasteBinPageModel {
     }
 
     private void agreeCookies() {
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
+        waitForELementToAppear(agreeCookiesButton);
+        agreeCookiesButton.click();
+        //new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(agreeCookiesButton)).click();
     }
 
     public void submitForm(String text, String pastExpriationValue, String pastNameValue) {

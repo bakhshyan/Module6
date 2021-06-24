@@ -6,26 +6,26 @@ import org.testng.annotations.Test;
 public class ResultTest extends BaseTest {
     @Test
     public void testVMClassValue() {
-        Assert.assertEquals(calculatorPageModel.getVMClass(), "VM class: regular", "VM class value is incorrect");
+        Assert.assertTrue(calculatorPageModel.getVMClass().contains(machineClassValue), "VM class value is incorrect");
     }
 
     @Test
     public void testInstanceType() {
-        Assert.assertEquals(calculatorPageModel.getInstanceType(), "Instance type: e2-standard-2", "Instance type is incorrect");
+        Assert.assertTrue(calculatorPageModel.getInstanceType().contains(machineTypeValue), "Instance type is incorrect");
     }
 
     @Test
     public void testLocalSSDSpace() {
-        Assert.assertEquals(calculatorPageModel.getLocalSSD(), "Total available local SSD space 24x375 GiB", "Local SSD space is incorrect");
+        Assert.assertTrue(calculatorPageModel.getLocalSSD().contains(localSSDValue), "Local SSD space is incorrect");
     }
 
     @Test
     public void testRegion() {
-        Assert.assertEquals(calculatorPageModel.getRegion(), "Region: Iowa", "Region is incorrect");
+        Assert.assertTrue(calculatorPageModel.getRegion().contains(dataCenterLocationValue), "Region is incorrect");
     }
 
     @Test
     public void testCommitmentTerm() {
-        Assert.assertEquals(calculatorPageModel.getCommitmnetTerm(), "Commitment term: 1 Year", "Commitment term year is incorrect");
+        Assert.assertTrue(calculatorPageModel.getCommitmentTerm().contains(commitmentUsageValue), "Commitment term year is incorrect");
     }
 }

@@ -29,22 +29,9 @@ public class TotalAmountTest extends BaseTest {
         driver.switchTo().window(currentHandle);
         String totalAmountFromCalculatorPage = calculatorPageModel.getTotalAmount();
         calculatorPageModel.emailEstimateButtonClick();
-
-        boolean staleElement = true;
-        while (staleElement) {
-            try {
-                calculatorPageModel.getEmailInput().sendKeys(email);
-                staleElement = false;
-
-            } catch (StaleElementReferenceException e) {
-
-                staleElement = true;
-
-            }
-        }
+        calculatorPageModel.setEmaiInput(email);
         calculatorPageModel.sendEmail();
         driver.switchTo().window(mailPage);
-
         tempMailPageModel.clickMailBoxHeader();
         Assert.assertTrue(totalAmountFromCalculatorPage.contains(tempMailPageModel.getTotalAmount()));
     }

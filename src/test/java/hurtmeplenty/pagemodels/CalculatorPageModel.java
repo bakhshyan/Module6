@@ -1,7 +1,6 @@
 package hurtmeplenty.pagemodels;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,69 +12,44 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class CalculatorPageModel {
     private WebDriver driver;
 
-    @FindBy(xpath = "//iframe[@src='/products/calculator/index_ad8ca20a6d1799e286a0c0839aeb86ca523afe927b04501d8ba77dc59e5b8523.frame']")
+    @FindBy(xpath = "//article[@id='cloud-site']/devsite-iframe/iframe")
     private WebElement firstIframe;
 
     @FindBy(xpath = "//iframe[@id='myFrame']")
     private WebElement secondIframe;
 
-    @FindBy(xpath = "//input[@id='input_66']")
+    @FindBy(xpath = "//label[contains(text(),'Number of instances')]/following-sibling::input")
     private WebElement numberOfInstanceInput;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_59']/span[@class='md-select-icon']")
+    @FindBy(xpath = "//label[contains(text(),'Operating System / Software')]/following-sibling::md-select//span[@class='md-select-icon']")
     private WebElement operatingSystemSelectIcon;
 
-    @FindBy(xpath = "//md-option[@value='rhel']")
-    private WebElement operatingSystemSelect;
-
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_60']/span[@class='md-select-icon']")
+    @FindBy(xpath = "//md-select[@placeholder='VM Class']")
     private WebElement machineClassSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_80']/div[@class='md-text']")
-    private WebElement machineClassSelect;
-
-
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_63']/span[@class='md-select-icon']")
+    @FindBy(xpath = "//md-select[@placeholder='Instance type']")
     private WebElement machineTypeSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_243']/div[@class='md-text ng-binding']")
-    private WebElement machineTypeSelect;
-
-    @FindBy(xpath = "//input[@id='input_107']")
+    @FindBy(name = "nodesCount")
     private WebElement numberOfNodesInput;
 
     @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']//div[@class='md-container md-ink-ripple']")
     private WebElement addGPUCheckbox;
 
-    @FindBy(xpath = "//md-select[@id='select_373']")
+    @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
     private WebElement numberOfGPUSelectIcon;
-
-    @FindBy(xpath = "//md-option[@id='select_option_377']/div[@class='md-text ng-binding']")
-    private WebElement numberOfGPUSelect;
 
     @FindBy(xpath = "//md-select[@placeholder='GPU type']")
     private WebElement GPUTypeSelectIcon;
 
-    @FindBy(xpath = "//md-option[@value='NVIDIA_TESLA_V100']/div[@class='md-text ng-binding']")
-    private WebElement GPUTypeSelect;
-
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_104']/span[@class='md-select-icon']")
+    @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
     private WebElement localSSDSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_119']/div[@class='md-text']")
-    private WebElement localSSDSelect;
-
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_105']/span[@class='md-select-icon']")
+    @FindBy(xpath = "(//md-select[@placeholder='Datacenter location'])[2]")
     private WebElement dataCenterLocationSelectIcon;
 
-    @FindBy(xpath = "//md-option[@id='select_option_257']/div[@class='md-text ng-binding']")
-    private WebElement dataCenterLocationSelect;
-
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_106']/span[@class='md-select-icon']")
+    @FindBy(xpath = "(//md-select[@placeholder='Committed usage'])[2]")
     private WebElement committedUsageSelectIcon;
-
-    @FindBy(xpath = "//md-option[@id='select_option_125']/div[@class='md-text']")
-    private WebElement commitedUsageSelect;
 
     @FindBy(xpath = "//form[@name='ComputeEngineForm']//button[@ng-click='listingCtrl.addComputeServer(ComputeEngineForm);']")
     private WebElement addToEstimateInstances;
@@ -92,7 +66,7 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//md-card-content[@id='resultBlock']//md-content[@id='compute']//md-list-item[4]")
     private WebElement region;
 
-    @FindBy(xpath = "//md-content[@id='soleTenant']/md-list[@class='cartitem ng-scope']/md-list-item[7]/div")
+    @FindBy(xpath = "//md-content[@id='soleTenant']/md-list[@class='cartitem ng-scope']//div[contains(text(),'local SSD')]")
     private WebElement localSSD;
 
     @FindBy(xpath = "//md-content[@id='soleTenant']/md-list[@class='cartitem ng-scope']/md-list-item[4]/div")
@@ -110,6 +84,16 @@ public class CalculatorPageModel {
     @FindBy(xpath = "//h2[@class='md-title']/b[@class='ng-binding']")
     private WebElement totalAmount;
 
+    private String operatingSystemSelect = "//md-option[@class='md-ink-ripple']/div[contains(text(),'%s')]";
+    private String machineClassSelect = "(//md-option[@value='%s'])[2]";
+    private String machineTypeSelect = "//md-option[@ng-repeat='instance in typeInfo']/div[contains(text(),'%s')]";
+    private String numberOfGPUSelect = "//md-option[@ng-value='item.value']/div[@class='md-text ng-binding' and text()=%s]";
+    private String GPUTypeSelect = "//md-option[@ng-value='item.value']/div[contains(text(),'%s')]";
+    private String localSSDSelect = "//div[contains(text(),'%s')]";
+    private String dataCenterLocationSelect = "(//md-option[@ng-value='item.value']/div[contains(text(),'%s')])[3]";
+    private String commitedUsageSelect = "(//div[text()='%s'])[2]";
+
+
     public CalculatorPageModel(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -120,28 +104,29 @@ public class CalculatorPageModel {
         driver.switchTo().frame(secondIframe);
     }
 
-    public void fillTheForm(int numberOfInstance, int numberOfNodes) {
+    public void fillTheForm(int numberOfInstance, String operatingSystemValue, String machineClassValue,
+                            String machineTypeValue, String numberOfGPUValue, String GPUTypeValue, String localSSDValue,
+                            String dataCenterLocationValue, String commitedUsageValue, int numberOfNodes) {
         switchToIframes();
         new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(numberOfInstanceInput)).sendKeys(String.valueOf(numberOfInstance));
         operatingSystemSelectIcon.click();
-        operatingSystemSelect.click();
+        driver.findElement(By.xpath(String.format(operatingSystemSelect, operatingSystemValue))).click();
         machineClassSelectIcon.click();
-        machineClassSelect.click();
+        driver.findElement(By.xpath(String.format(machineClassSelect, machineClassValue))).click();
         machineTypeSelectIcon.click();
-        machineTypeSelect.click();
+        driver.findElement(By.xpath(String.format(machineTypeSelect, machineTypeValue))).click();
         numberOfNodesInput.sendKeys(String.valueOf(numberOfNodes));
         addGPUCheckbox.click();
         numberOfGPUSelectIcon.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(numberOfGPUSelect)).click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format(numberOfGPUSelect, numberOfGPUValue))))).click();
         GPUTypeSelectIcon.click();
-        GPUTypeSelect.click();
+        driver.findElement(By.xpath(String.format(GPUTypeSelect, GPUTypeValue))).click();
         localSSDSelectIcon.click();
-        localSSDSelect.click();
+        driver.findElement(By.xpath(String.format(localSSDSelect, localSSDValue))).click();
         dataCenterLocationSelectIcon.click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", dataCenterLocationSelect);
-        dataCenterLocationSelect.click();
+        driver.findElement(By.xpath(String.format(dataCenterLocationSelect, dataCenterLocationValue))).click();
         committedUsageSelectIcon.click();
-        commitedUsageSelect.click();
+        driver.findElement(By.xpath(String.format(commitedUsageSelect, commitedUsageValue))).click();
         addToEstimateInstances.findElement(By.xpath("./..")).submit();
         addToEstimateSoleTenantNodes.findElement(By.xpath("./..")).submit();
 
@@ -163,7 +148,7 @@ public class CalculatorPageModel {
         return localSSD.getText();
     }
 
-    public String getCommitmnetTerm() {
+    public String getCommitmentTerm() {
         return commitmentTerm.getText();
     }
 
@@ -173,12 +158,14 @@ public class CalculatorPageModel {
 
     }
 
-    public WebElement getEmailInput() {
-        return emailInput;
+    public void setEmaiInput(String email) {
+        new WebDriverWait(driver, 80).until(ExpectedConditions.visibilityOf(emailInput));
+        new WebDriverWait(driver, 40);
+        emailInput.sendKeys(email);
     }
 
     public void sendEmail() {
-        new WebDriverWait(driver,30).until(ExpectedConditions.visibilityOf(sendEmailButton));
+        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(sendEmailButton));
         sendEmailButton.click();
     }
 

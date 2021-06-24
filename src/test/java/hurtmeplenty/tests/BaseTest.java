@@ -14,7 +14,13 @@ public class BaseTest {
     public SearchedItemsPageModel searchedItemsPageModel;
     public CalculatorPageModel calculatorPageModel;
 
-    @BeforeSuite(alwaysRun = true)
+    String machineClassValue = "regular";
+    String machineTypeValue = "e2-standard-2";
+    String localSSDValue = "24x375";
+    String dataCenterLocationValue = "Iowa";
+    String commitmentUsageValue = "3 Years";
+
+    @BeforeTest(alwaysRun = true)
     public void openBrowser() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         driver = new ChromeDriver();
@@ -26,15 +32,22 @@ public class BaseTest {
         String searchText = "Google Cloud Platform Pricing Calculator";
         homePageModel.searchItem(searchText);
         searchedItemsPageModel.clickSearchedResult(searchText);
-        calculatorPageModel.fillTheForm(10, 1);
-
+        calculatorPageModel.fillTheForm(10,
+                "Free: Debian, CentOS, CoreOS, Ubuntu, or other User Provided OS",
+                machineClassValue,
+                machineTypeValue,
+                "0",
+                "NVIDIA Tesla V100",
+                localSSDValue,
+                dataCenterLocationValue,
+                commitmentUsageValue,
+                1);
 
     }
 
-    @AfterSuite(alwaysRun = true)
-    public void tearDown() {
-        driver.quit();
-    }
-
+//    @AfterTest(alwaysRun = true)
+//    public void tearDown() {
+//        driver.quit();
+//    }
 
 }
